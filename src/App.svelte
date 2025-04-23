@@ -34,6 +34,7 @@
     }
 
     let props: ICalendar = {
+        id: "calendar-2025",
         year: 2025,
         holidays: holidaysaa,
         dayStartWithMonday: true,

@@ -3,13 +3,14 @@
     import Wallpaper from "/Colourful-Wave-White-Abstract-Wallpaper-28538.jpg"
 
     export interface ICalendar {
+        id: string,
         year: number,
         holidays?: Holiday,
         dayStartWithMonday?: boolean,
     }
 
 
-    let {year, holidays = {public: {}, joint: {}}, dayStartWithMonday = true}: ICalendar = $props()
+    let {id, year, holidays = {public: {}, joint: {}}, dayStartWithMonday = true}: ICalendar = $props()
     Calendar.setHolidays(holidays)
 
     const x1 = 120
@@ -42,6 +43,7 @@
         <g class="day {info.isPublicHoliday(i,k)?"public":""} {info.isJointHoliday(i,k)?"joint":""}">
             {#if info.isPublicHoliday(i,k) || info.isJointHoliday(i,k)}
             <circle r=15 cx={xAdjust + x1 + k * dx} cy={yAdjust + y1 + i * dy - 6.5} fill="{info.isPublicHoliday(i,k) ? "red" : "blue"}" />
+            <title>{(info.isJointHoliday(i,k) ? "Cuti Bersama ":"") + info.holiday(i, k)}</title>
             {/if}
             <text class="day{(k + (dayStartWithMonday ? 1 : 0)) % 7}" x={xAdjust + x1 + k*dx} y={yAdjust + y1 + dy * i}>{info.dayNum(i,k)}</text>
         </g>
@@ -54,7 +56,7 @@
     {/each}
 {/snippet}
 
-<svg width="100%" height="100%" viewBox="0,0,1920,1080" style="background-color: #a0a0d0; background-image: url({Wallpaper})" xmlns="http://www.w3.org/2000/svg">
+<svg {id} width="100%" height="100%" viewBox="0,0,1920,1080" style="background-color: #a0a0d0; background-image: url({Wallpaper})" xmlns="http://www.w3.org/2000/svg">
     <style>
         text {
             font-weight: bold;
@@ -90,7 +92,7 @@
     <text class="year" x=960 y=80>{year}</text>
 
     <!-- <rect x=0 y=0 width=1920 height=1080 fill="none" style="stroke-width:1;stroke:rgb(255,0,0)"></rect> -->
-<!-- 
+<!--
     <rect x=0 y=90 width=480 height=330 fill="none" style="stroke-width:1;stroke:rgb(0,0,0)"></rect>
     <rect x=480 y=90 width=480 height=330 fill="none" style="stroke-width:1;stroke:rgb(0,0,0)"></rect>
     <rect x=960 y=90 width=480 height=330 fill="none" style="stroke-width:1;stroke:rgb(0,0,0)"></rect>

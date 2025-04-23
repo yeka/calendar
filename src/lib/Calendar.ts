@@ -46,6 +46,7 @@ type MonthInfo = {
     dayNum(lines: number, col: number): number|null
     isPublicHoliday(lines: number, col: number): boolean
     isJointHoliday(lines: number, col: number): boolean
+    holiday(lines: number, col: number): string
     holidays(): string[]
 }
 
@@ -66,7 +67,7 @@ const Calendar = {
                 return Math.ceil((this.startingDay + this.numberOfDay) / 7)
             },
             dayNum(lines: number, col: number): number|null {
-                const d = lines * 7 + col - this.startingDay + 1; 
+                const d = lines * 7 + col - this.startingDay + 1;
                 if (d < 1 || d > this.numberOfDay) {
                     return null
                 } else {
@@ -94,6 +95,19 @@ const Calendar = {
                     }
                 }
                 return false
+            },
+            holiday(lines: number, col: number): string {
+                const key = year + "-" + month
+                for (const holidayTypes of [holidays.public, holidays.joint]) {
+                    for (const k in holidayTypes) {
+                        if (holidayTypes[k][key] != undefined) {
+                            if (holidayTypes[k][key].indexOf(this.dayNum(lines, col)??0) >= 0) {
+                                return k
+                            }
+                        }
+                    }
+                }
+                return ""
             },
             holidays(): string[] {
                 const key = year + "-" + month
