@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Calendar, type MonthInfo, type Holiday } from "./Calendar";
-    import Wallpaper from "/Colourful-Wave-White-Abstract-Wallpaper-28538.jpg"
+    import Wallpaper from "/images/Colourful-Wave-White-Abstract-Wallpaper-28538.jpg"
 
     export interface ICalendar {
         id: string,
